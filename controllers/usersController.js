@@ -30,13 +30,9 @@ exports.updateUser = async (req, res, next) => {
 };
 
 exports.addUser = async (req, res, next) => {
-  const errors = validationResult(req)
-  if(!errors.isEmpty()){
-    return res.status(422).json({errors: errors.array()})
-  }
-  const user = req.body;
+  const data = req.body;
   // Schreib hier code um die Daten des neuen Kunden aus req.body in der users-Collection zu speichern
-  const newUser = new Users(user)
-  await newUser.save()
+  var user = new Users(data)
+  await user.save()
   res.status(200).send(user);
 };
