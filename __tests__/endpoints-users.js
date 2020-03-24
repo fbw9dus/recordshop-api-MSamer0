@@ -1,7 +1,7 @@
 const app = require('../app')
 const request = require('supertest')
 const mongoose = require('mongoose')
-const User = require('../routes/users')
+const User = require('../models/User')
 const {exec} = require('child_process')
 const faker = require('faker')
 
