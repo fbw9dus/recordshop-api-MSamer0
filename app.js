@@ -47,12 +47,6 @@ app.use("/users", usersRouter);
 app.use("/records", recordsRouter);
 app.use("/orders", ordersRouter);
 
-/** ERROR HANDLING */
-/*app.use(function(req, res, next) {
-  const error = new Error("Looks like something broke...");
-  error.status = 400;
-  next(error);
-});*/
 
 app.use(function(err, req, res, next) {
   res.status(err.status || 500).send({
