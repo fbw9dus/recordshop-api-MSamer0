@@ -30,7 +30,12 @@ mongoose.connection.on("open", function() {
   console.log("Database connection established...");
 });
 
-
+//const User = require('./models/User')
+//app.post('/users', (req, res) => {
+  //const userData = req.body
+  //const user = new user(userData)
+  //user.save() 
+//})
 
 /** REQUEST PARSERS */
 app.use(express.json());
