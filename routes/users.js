@@ -11,11 +11,13 @@ const {
   deleteUser,
   addUser
 } = require("../controllers/usersController");
+const {userValidationRules} = require('../lib/validation/userRules')
+const {validateInputs} = require('../middleware/validator')
 
 router
   .route("/")
   .get(getUsers)
-  .post(addUser);
+  .post(validateInputs(userValidationRules), addUser);
 
 router
   .route("/:id")
