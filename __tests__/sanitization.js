@@ -55,4 +55,5 @@ beforeAll(async (done) => {
   
 afterAll(async () => {
     await server.close();
-    await
+    await mongoose.disconnect();
+});
