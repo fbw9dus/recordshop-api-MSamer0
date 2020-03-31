@@ -10,7 +10,7 @@ let server;
 describe('Sanitization', () => {
     test('email in db should be sanitized', async done => {
         ////// EMAIL
-        const unsanitizedEmail = 'CamelCase@googlemail.com'
+        const unsanitizedEmail = 'Samer@joker.com'
         const sanitizedEmail = validator.normalizeEmail(unsanitizedEmail)
         console.log(sanitizedEmail)
         const unsanitizedData = {
@@ -29,7 +29,7 @@ describe('Sanitization', () => {
     })
     test('firstname in db should be sanitized', async done => {
         ///// FIRSTNAME
-        const unsanitizedFirstName = '  Maxim   '
+        const unsanitizedFirstName = 'Samer'
         const sanitizedFirstName = validator.trim(unsanitizedFirstName)
         const unsanitizedData = {
             firstName: unsanitizedFirstName,
