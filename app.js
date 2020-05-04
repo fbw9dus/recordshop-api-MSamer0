@@ -24,19 +24,10 @@ mongoose.connect("mongodb://localhost:27017/record-shop", {
   useCreateIndex: true,
   useUnifiedTopology: true
 });
-
 mongoose.connection.on("error", console.error);
 mongoose.connection.on("open", function() {
   console.log("Database connection established...");
 });
-
-//const User = require('./models/User')
-//app.post('/users', (req, res) => {
-  //const userData = req.body
-  //const user = new user(userData)
-  //user.save() 
-//})
-
 /** REQUEST PARSERS */
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,13 +36,12 @@ app.use(setCors);
 
 /** STATIC FILES*/
 app.use(express.static(path.join(__dirname, "public")));
-
+//validation 
 /** ROUTES */
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/records", recordsRouter);
 app.use("/orders", ordersRouter);
-
 
 app.use(function(err, req, res, next) {
   res.status(err.status || 500).send({

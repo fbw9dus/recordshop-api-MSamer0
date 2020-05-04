@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const User = require("../models/User")
+const auth= require("../middleware/authenticator")
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("data/db.json");
-const auth = require("../middleware/authenticator")
-const isAdmin = require('../middleware/rolesAuthenticator')
 const db = low(adapter);
+
 const {
   getRecords,
   getRecord,
@@ -17,13 +18,12 @@ const {
 router
   .route("/")
   .get(getRecords)
-  .post(auth,isAdmin, addRecord);
+  .post(auth, addRecord);
 
 router
   .route("/:id")
   .get(getRecord)
-  .delete(auth,isAdmin, deleteRecord)
-  .put(auth,isAdmin, updateRecord);
+  .delete(auth, deleteRecord)
+  .put(auth, updateRecord);
 
 module.exports = router;
-

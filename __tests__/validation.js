@@ -3,7 +3,6 @@ const request = require('supertest')
 const mongoose = require('mongoose')
 const User = require('../models/User')
 const faker = require('faker')
-
 let server;
 let token;
 
