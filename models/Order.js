@@ -9,6 +9,7 @@ const OrderSchema = new Schema({
   record: {
     ref:'Record',
     type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 });
 

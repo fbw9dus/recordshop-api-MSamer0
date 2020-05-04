@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const isAdmin = require('../middleware/rolesAuthenticater')
+const auth = require('../middleware/authenticator');
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("data/db.json");
@@ -16,12 +18,16 @@ const {
 
 router
   .route("/")
-  .get(getUsers)
+  .get(auth,isAdmin, getUsers)
   .post(validateInputs(userValidationRules), addUser);
+
+router.route("/login")
+  .post(loginUser)
+
 router
   .route("/:id")
-  .get(getUser)
-  .delete(deleteUser)
-  .put(updateUser);
+  .get(auth, getUser)
+  .delete(auth, deleteUser)
+  .put(auth, updateUser);
 
 module.exports = router;

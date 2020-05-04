@@ -1,22 +1,34 @@
-var Records = require('../models/Record')
+const Record = require('../models/Record')
+const createError = require('http-errors')
 
 exports.getRecords = async (req, res, next) => {
   // Schreib hier code um alle records aus der records-Collection zu holen
-  var records = await Records.find()
-  res.status(200).send(records);
+  try {
+    const records = await Record.find()
+    res.status(200).send(records);
+  } catch (error) {
+    next(error)
+  }
+  
 };
 
 exports.getRecord = async (req, res, next) => {
-  const { id } = req.params;
-  // Schreib hier code um das record mit der id aus params aus der records-Collection zu holen
-  var record = await Records.findById(id)
-  res.status(200).send(record);
+  try {
+    const { id } = req.params;
+    // Schreib hier code um das record mit der id aus params aus der records-Collection zu holen
+    const record = Record.findById(id)
+    if(!record) throw new createError.NotFound()
+    res.status(200).send(record);
+  } catch (error) {
+    next(error)
+  }
+  
 };
 
 exports.deleteRecord = async (req, res, next) => {
   const { id } = req.params;
   // Schreib hier code um das record mit der id aus params aus der records-Collection zu löschen
-  var record = await Records.findByIdAndDelete(id)
+  const record = Record.findByIdAndDelete(id)
   res.status(200).send(record);
 };
 
@@ -24,14 +36,14 @@ exports.updateRecord = async (req, res, next) => {
   const { id } = req.params;
   const dt = req.body;
   // Schreib hier code um das record mit der id aus params in der records-Collection mit den Daten aus req.body zu aktualisieren
-  var record = await Records.findByIdAndUpdate(id, dt, {new: true})
+  const record = Record.findByIdAndUpdate(id, dt)
   res.status(200).send(record);
 };
 
-exports.addRecord =async (req, res, next) => {
+exports.addRecord = async (req, res, next) => {
   const data = req.body;
   // Schreib hier code um die Daten des neuen record aus req.body in der records-Collection zu speichern
-  var record = new Records(data)
-  await record.save()
+  const record = Record.create(data)
   res.status(200).send(record);
 };
+
