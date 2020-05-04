@@ -20,11 +20,14 @@ exports.getUser = async (req, res, next) => {
   res.status(200).send(user);
 };
 
-exports.deleteUser = (req, res, next) => {
-  const { id } = req.params;
-  // Schreib hier code um den Kunden mit der id aus params aus der users-Collection zu löschen
-const user =  User.findByIdAndDelete(id).select("-password")
-  res.status(200).send(user);
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) throw new createError.NotFound();
+    res.status(200).send(user);
+  } catch (e) {
+    next(e);
+  }
 };
 
 exports.updateUser = async (req, res, next) => {
@@ -32,7 +35,7 @@ exports.updateUser = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
-    }).select("-password");
+    });
     if (!user) throw new createError.NotFound();
     res.status(200).send(user);
   } catch (e) {
@@ -90,4 +93,3 @@ exports.loginUser = async (req, res, next) => {
   }
 
 };
-
