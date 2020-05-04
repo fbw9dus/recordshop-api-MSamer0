@@ -4,7 +4,7 @@ const userValidationRules = [
     body("email")
       .isEmail()
       .normalizeEmail()
-      .withMessage("Your email looks Joke..."),
+      .withMessage("Your email looks funky..."),
     body("password")
       .isLength({ min: 10 })
       .withMessage("Minimum password length is 10"),
