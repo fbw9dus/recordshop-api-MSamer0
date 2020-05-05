@@ -14,35 +14,30 @@ exports.getRecords = async (req, res, next) => {
 
 exports.getRecord = async (req, res, next) => {
   try {
-    const record = await Record.findById(req.params.id);
-    if (!record) throw new createError.NotFound();
+    const { id } = req.params;
+    // Schreib hier code um das record mit der id aus params aus der records-Collection zu holen
+    const record = Record.findById(id)
+    if(!record) throw new createError.NotFound()
     res.status(200).send(record);
-  } catch (e) {
-    next(e);
+  } catch (error) {
+    next(error)
   }
   
 };
 
 exports.deleteRecord = async (req, res, next) => {
-  try {
-    const record = await Record.findByIdAndDelete(req.params.id);
-    if (!record) throw new createError.NotFound();
-    res.status(200).send(record);
-  } catch (e) {
-    next(e);
-  }
+  const { id } = req.params;
+  // Schreib hier code um das record mit der id aus params aus der records-Collection zu löschen
+  const record = Record.findByIdAndDelete(id)
+  res.status(200).send(record);
 };
 
 exports.updateRecord = async (req, res, next) => {
-  try {
-    const record = await Record.findByIdAndUpdate(req.params.id, req.body, {
-      new: true
-    });
-    if (!record) throw new createError.NotFound();
-    res.status(200).send(record);
-  } catch (e) {
-    next(e);
-  }
+  const { id } = req.params;
+  const dt = req.body;
+  // Schreib hier code um das record mit der id aus params in der records-Collection mit den Daten aus req.body zu aktualisieren
+  const record = Record.findByIdAndUpdate(id, dt)
+  res.status(200).send(record);
 };
 
 exports.addRecord = async (req, res, next) => {

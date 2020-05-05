@@ -52,8 +52,6 @@ const Owner = mongoose.model('Owner', OwnerSchema)
         car: iPace.id
     })
 
-    const owner = await Owner.findById(sam.id).populate('car')
-   
-
+    const owner = await Owner.findById(sam.id).populate('car', '-__v -_id')
     console.log(owner)
 })()
